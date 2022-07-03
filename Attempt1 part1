@@ -1,0 +1,10 @@
+I updated the table first to diplay N/A where null was found. But later had issues with displaying N/A first then ASC later. Will post new code next.
+UPDATE public."continent_map" SET country_code = 'N/A' Where country_code IS null ;
+select * from public."continent_map" where country_code = 'N/A' ;
+select country_code 
+from public."continent_map" 
+group by country_code 
+having count(*)>1 
+order by 
+case country_code
+    when 'N/A' then 0 end ;
