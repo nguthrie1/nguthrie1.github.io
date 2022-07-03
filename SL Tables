@@ -1,0 +1,10 @@
+Creating Tables for salesloft project
+
+CREATE TABLE public."Countries"(country_code TEXT, country_name TEXT)
+COPY public."Countries" FROM 'C:\Users\nguth\OneDrive\Documents\countries.csv' DELIMITER ',' CSV HEADER ;
+CREATE TABLE public."continent_map"(country_code TEXT, continent_code TEXT)
+copy public."continent_map" from 'C:\Users\nguth\OneDrive\Documents\continent_map.csv' DELIMITER ',' CSV HEADER;
+CREATE TABLE public."per_capita"(country_code TEXT, year int, gdp_per_capita decimal)
+COPY public."per_capita" from 'C:\Users\nguth\OneDrive\Documents\per_capita.csv' DELIMITER ',' CSV HEADER ;
+CREATE TABLE public."continents"(continent_code text, continent_name text)
+COPY public."continents" from 'C:\Users\nguth\OneDrive\Documents\continents.csv' delimiter ',' CSV HEADER ;
