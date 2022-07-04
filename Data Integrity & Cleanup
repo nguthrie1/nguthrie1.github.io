@@ -1,0 +1,27 @@
+Data Integrity & Cleanup
+
+Alphabetically list all the country codes in the continent map table that appear more than once. For countries with no country code make them display as "N/A" and display them first in the list.
+
+
+
+SELECT 
+(CASE WHEN country_code IS NULL THEN 'N/A' ELSE country_code END) AS  cleaned_country_code
+
+FROM public."continent_map"
+
+GROUP BY country_code
+HAVING COUNT(*) > 1
+ORDER BY country_code NULLS FIRST ;
+
+"country_code"
+"N/A"
+"ARM"
+"AZE"
+"CYP"
+"GEO"
+"KAZ"
+"RUS"
+"TUR"
+"UMI"
+
+
