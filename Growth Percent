@@ -1,0 +1,66 @@
+List the Top 10 Countries by year over year % GDP per capita growth between 2011 & 2012.
+
+% year over year growth is defined as (GDP Per Capita in 2012 - GDP Per Capita in 2011) / (GDP Per Capita in 2011)
+
+The final product should include columns for:
+
+Rank
+Country Name
+Country Code
+Continent
+Growth Percent
+
+
+create table difference_gdp_per_capita
+as
+SELECT year,
+       gdp_per_capita,
+       country_code,
+       Lag(gdp_per_capita) OVER (partition by country_code ORDER BY year) AS gdp_previous_year, 
+       gdp_per_capita - lag(gdp_per_capita) over (partition by country_code Order by year) as yoy_gdp_growth 
+FROM public.per_capita
+where year = 2011 or year = 2012 ;
+
+select year, gdp_per_capita, country_code, yoy_gdp_growth/gdp_previous_year
+from public.difference_gdp_per_capita
+
+create table percent_yoy_growth
+as
+select year, gdp_per_capita, country_code, yoy_gdp_growth/gdp_previous_year * 100 as Growth_Percent
+from public.difference_gdp_per_capita where yoy_gdp_growth is not null 
+
+
+select
+rank () over (order by growth_percent desc) as Rank,
+ final_chart.country_name as country_name,
+ final_chart.country_code as country_code,
+ final_chart.continent_name as continent,
+ final_chart.growth_percent as growth_percent 
+from 
+(select per_capita.country_code,
+   continents.continent_name,
+ "Countries".country_name,
+ yoy_growth.growth_percent, per_capita.year
+from public.per_capita
+left join public."Countries"
+on per_capita.country_code = "Countries".country_code
+left join public.continent_map AS map 
+on per_capita.country_code = map.country_code 
+left join percent_yoy_growth as yoy_growth
+on per_capita.country_code = yoy_growth.country_code 
+left join public.continents
+on continents.continent_code = map.continent_code) As final_chart
+where growth_percent is not null and year = 2012 
+limit 10;
+
+Results
+1	"Ethiopia"	"ETH"	"Africa"	35.87517184001437648500
+2	"Sierra Leone"	"SLE"	"Africa"	26.72522184578881858000
+3	"Uganda"	"UGA"	"Africa"	25.03495302705526302400
+4	"Papua New Guinea"	"PNG"	"Oceania"	23.59187855975052225300
+5	"Turkmenistan"	"TKM"	"Asia"	18.74722551801547869800
+6	"Venezuela, RB"	"VEN"	"South America"	18.64977191140235046100
+7	"Kenya"	"KEN"	"Africa"	17.82331837392364717000
+8	"Macao SAR, China"	"MAC"	"Asia"	16.20510580486787284200
+9	"Mongolia"	"MNG"	"Asia"	15.46200554893388423600
+10	"Tanzania"	"TZA"	"Africa"	14.76655332006697036300
