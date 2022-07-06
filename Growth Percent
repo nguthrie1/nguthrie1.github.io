@@ -1,3 +1,5 @@
+Problem
+
 List the Top 10 Countries by year over year % GDP per capita growth between 2011 & 2012.
 
 % year over year growth is defined as (GDP Per Capita in 2012 - GDP Per Capita in 2011) / (GDP Per Capita in 2011)
@@ -10,6 +12,7 @@ Country Code
 Continent
 Growth Percent
 
+Query
 
 create table difference_gdp_per_capita
 as
@@ -54,6 +57,7 @@ where growth_percent is not null and year = 2012
 limit 10;
 
 Results
+Rank, country_name, country_code, continent, growth_percent
 1	"Ethiopia"	"ETH"	"Africa"	35.87517184001437648500
 2	"Sierra Leone"	"SLE"	"Africa"	26.72522184578881858000
 3	"Uganda"	"UGA"	"Africa"	25.03495302705526302400
