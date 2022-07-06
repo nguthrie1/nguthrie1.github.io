@@ -1,0 +1,78 @@
+For years 2004 through 2012, calculate the median GDP Per Capita for every continent for every year. The median in this case is defined as The value at which half of the samples for a continent are higher and half are lower
+
+The final product should include columns for:
+
+Year
+Continent
+Median GDP Per Capita
+
+Query
+
+SELECT year as "Year", cont.continent_name as "Continent", 
+cast(PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY gdp_per_capita) as decimal(10,3)) 
+as "Median GDP per Capita"
+from public.per_capita as capita
+join public.continent_map as map
+on capita.country_code = map.country_code
+join public.continents as cont
+on cont.continent_code = map.continent_code
+group by year, cont.continent_name
+order by year, cont.continent_name
+
+Results
+
+Year, Continent Name, median GDP per Capita
+2004	"Africa"	557.221
+2004	"Asia"	1455.936
+2004	"Europe"	16944.190
+2004	"North America"	5250.553
+2004	"Oceania"	2247.838
+2004	"South America"	2880.420
+2005	"Africa"	663.710
+2005	"Asia"	1731.125
+2005	"Europe"	17854.635
+2005	"North America"	5492.865
+2005	"Oceania"	2352.639
+2005	"South America"	3491.733
+2006	"Africa"	781.991
+2006	"Asia"	2397.075
+2006	"Europe"	19177.426
+2006	"North America"	6072.298
+2006	"Oceania"	2502.211
+2006	"South America"	4455.528
+2007	"Africa"	882.914
+2007	"Asia"	3085.080
+2007	"Europe"	21980.685
+2007	"North America"	6655.388
+2007	"Oceania"	2768.435
+2007	"South America"	5208.361
+2008	"Africa"	1090.411
+2008	"Asia"	4118.401
+2008	"Europe"	22785.296
+2008	"North America"	6801.653
+2008	"Oceania"	3094.684
+2008	"South America"	6130.142
+2009	"Africa"	862.787
+2009	"Asia"	4027.052
+2009	"Europe"	19259.760
+2009	"North America"	6778.660
+2009	"Oceania"	2763.184
+2009	"South America"	6283.489
+2010	"Africa"	1007.883
+2010	"Asia"	4612.523
+2010	"Europe"	17549.845
+2010	"North America"	7357.509
+2010	"Oceania"	3112.840
+2010	"South America"	7250.023
+2011	"Africa"	1118.664
+2011	"Asia"	5724.542
+2011	"Europe"	19170.296
+2011	"North America"	8069.525
+2011	"Oceania"	3361.962
+2011	"South America"	7692.533
+2012	"Africa"	1029.276
+2012	"Asia"	6566.648
+2012	"Europe"	16892.552
+2012	"North America"	9386.305
+2012	"Oceania"	3619.690
+2012	"South America"	8562.168
