@@ -1,0 +1,72 @@
+
+For years 2004 through 2012, calculate the average GDP Per Capita for every continent for every year. The average in this case is defined as the Sum of GDP Per Capita for All Countries in the Continent / Number of Countries in the Continent
+
+The final product should include columns for:
+
+Year
+Continent
+Average GDP Per Capita
+
+select year as "Year", cont.continent_name as "Continent", round(avg(gdp_per_capita),3) as "Average GDP per Capita"
+from public.per_capita as capita
+join public.continent_map as map
+on capita.country_code = map.country_code
+join public.continents as cont
+on cont.continent_code = map.continent_code
+group by year, cont.continent_name
+order by year, cont.continent_name
+
+2004	"Africa"	1524.792
+2004	"Asia"	7991.815
+2004	"Europe"	24075.681
+2004	"North America"	12576.254
+2004	"Oceania"	6502.653
+2004	"South America"	3051.490
+2005	"Africa"	1774.968
+2005	"Asia"	9035.418
+2005	"Europe"	25627.630
+2005	"North America"	13573.938
+2005	"Oceania"	7113.575
+2005	"South America"	3683.692
+2006	"Africa"	1991.446
+2006	"Asia"	10310.592
+2006	"Europe"	27744.241
+2006	"North America"	14645.167
+2006	"Oceania"	7281.143
+2006	"South America"	4475.366
+2007	"Africa"	2306.890
+2007	"Asia"	11448.656
+2007	"Europe"	32625.372
+2007	"North America"	15947.820
+2007	"Oceania"	8246.183
+2007	"South America"	5267.486
+2008	"Africa"	2669.918
+2008	"Asia"	13384.227
+2008	"Europe"	35296.752
+2008	"North America"	16388.985
+2008	"Oceania"	8980.151
+2008	"South America"	6333.303
+2009	"Africa"	2225.852
+2009	"Asia"	11440.461
+2009	"Europe"	30146.164
+2009	"North America"	15034.218
+2009	"Oceania"	7981.892
+2009	"South America"	6235.788
+2010	"Africa"	2350.582
+2010	"Asia"	12981.532
+2010	"Europe"	27710.138
+2010	"North America"	15178.537
+2010	"Oceania"	9304.486
+2010	"South America"	7514.282
+2011	"Africa"	2728.363
+2011	"Asia"	15182.185
+2011	"Europe"	30621.322
+2011	"North America"	15637.355
+2011	"Oceania"	10744.310
+2011	"South America"	8213.245
+2012	"Africa"	2704.526
+2012	"Asia"	15852.378
+2012	"Europe"	26283.406
+2012	"North America"	16328.514
+2012	"Oceania"	11482.504
+2012	"South America"	8759.512
