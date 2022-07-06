@@ -1,4 +1,4 @@
-
+Problem
 For years 2004 through 2012, calculate the average GDP Per Capita for every continent for every year. The average in this case is defined as the Sum of GDP Per Capita for All Countries in the Continent / Number of Countries in the Continent
 
 The final product should include columns for:
@@ -6,6 +6,8 @@ The final product should include columns for:
 Year
 Continent
 Average GDP Per Capita
+
+Query
 
 select year as "Year", cont.continent_name as "Continent", round(avg(gdp_per_capita),3) as "Average GDP per Capita"
 from public.per_capita as capita
@@ -16,6 +18,9 @@ on cont.continent_code = map.continent_code
 group by year, cont.continent_name
 order by year, cont.continent_name
 
+Results
+
+Year, Continent Name, Average GDP per Capita
 2004	"Africa"	1524.792
 2004	"Asia"	7991.815
 2004	"Europe"	24075.681
