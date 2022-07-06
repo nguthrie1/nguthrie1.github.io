@@ -21,7 +21,7 @@ order by year, cont.continent_name
 
 Results
 
-Year, Continent Name, median GDP per Capita
+Year, Continent Name, Median GDP per Capita
 2004	"Africa"	557.221
 2004	"Asia"	1455.936
 2004	"Europe"	16944.190
