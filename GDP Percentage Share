@@ -1,0 +1,56 @@
+create view totals as
+WITH distinct_country_code as (
+select 
+   distinct country_code, continent_code
+from public.continent_map
+where country_code is not null
+order by country_code)
+
+select 
+*  
+From
+(select sum(gdp_per_capita) as total
+from public.per_capita as capita
+left join distinct_country_code as dist
+on dist.country_code = capita.country_code  
+    inner JOIN public.continents as cont 
+    on cont.continent_code = dist.continent_code
+where capita.year = 2012) as total_gdp,
+(select 
+  sum(capita.gdp_per_capita) as North_America
+from public.per_capita as capita
+left join distinct_country_code as dist
+on dist.country_code = capita.country_code  
+    inner JOIN public.continents as cont 
+    on cont.continent_code = dist.continent_code
+where capita.year = 2012 and cont.continent_name = 'North America'
+) as North_America ,
+(select 
+    sum(capita.gdp_per_capita) as Europe
+from public.per_capita as capita
+left join distinct_country_code as dist
+on dist.country_code = capita.country_code  
+    inner JOIN public.continents as cont 
+    on cont.continent_code = dist.continent_code
+where capita.year = 2012 and cont.continent_name = 'Europe' 
+) as Europe,
+
+(select 
+    sum(capita.gdp_per_capita) as Rest_of_the_World 
+from public.per_capita as capita
+left join distinct_country_code as dist
+on dist.country_code = capita.country_code  
+    inner JOIN public.continents as cont 
+    on cont.continent_code = dist.continent_code
+where capita.year = 2012 and cont.continent_name <> 'North America' and cont.continent_name <> 'Europe' 
+) as Rest_of_the_World ; 
+
+
+select round((north_america/total)*100,4) as "North_America", 
+round((europe/total)*100,4) as "Europe", 
+round((rest_of_the_world/total)*100,4) as "Rest_of_the_World"
+from public.totals
+
+
+North America, Europe, Rest of the World
+13.9178	43.8318	42.2505
