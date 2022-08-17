@@ -1,4 +1,4 @@
-Creating Tables for salesloft project
+Creating Tables for project
 
 CREATE TABLE public."Countries"(country_code TEXT, country_name TEXT)
 COPY public."Countries" FROM 'C:\Users\nguth\OneDrive\Documents\countries.csv' DELIMITER ',' CSV HEADER ;
